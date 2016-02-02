@@ -1,3 +1,19 @@
+/**
+  ******************************************************************************
+  * @file    I2C.c
+  * @author  Fredrik Wigsnes
+  *******************************************************************************
+  * @attention
+  *
+  * MAY BE USED FREE OF CHARGE.
+  * SELLING WITHOUT PRIOR WRITTEN CONSENT PROHIBITED.
+  *
+  * <h2><center>&copy; COPYRIGHT 2016 ION Racing</center></h2>
+  ******************************************************************************
+  */
+
+/*-----------------------------------------------------------------------------*/
+
 #include "stm32f4xx_i2c.h"
 #include "stm32f4xx_gpio.h"
 #include "GPIO.h"
@@ -52,7 +68,7 @@ void I2C_Initialize(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 	I2C_Cmd(I2Cx, ENABLE);
 }
 
-void write8(I2C_TypeDef* I2Cx,uint8_t reg, uint8_t addr, uint8_t data)
+void write8(I2C_TypeDef* I2Cx,uint8_t addr, uint8_t reg, uint8_t data)
 {
 	I2C_AcknowledgeConfig(I2Cx,ENABLE);
 	while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY));
@@ -73,7 +89,7 @@ void write8(I2C_TypeDef* I2Cx,uint8_t reg, uint8_t addr, uint8_t data)
 	while(I2C_GetFlagStatus(I2Cx,I2C_FLAG_STOPF));
 }
 
-uint8_t read8(I2C_TypeDef* I2Cx, uint8_t reg, uint8_t addr)
+uint8_t read8(I2C_TypeDef* I2Cx, uint8_t addr, uint8_t reg)
 {
 	uint8_t data = 0;
 

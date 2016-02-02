@@ -1,3 +1,19 @@
+/**
+  ******************************************************************************
+  * @file    RCC.c
+  * @author  Fredrik Wigsnes
+  *******************************************************************************
+  * @attention
+  *
+  * MAY BE USED FREE OF CHARGE.
+  * SELLING WITHOUT PRIOR WRITTEN CONSENT PROHIBITED.
+  *
+  * <h2><center>&copy; COPYRIGHT 2016 ION Racing</center></h2>
+  ******************************************************************************
+  */
+
+/*-----------------------------------------------------------------------------*/
+
 #include "stm32f4xx_rcc.h"
 
 void RCC_GPIO_Init(GPIO_TypeDef* GPIOx)
