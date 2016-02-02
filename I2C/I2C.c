@@ -100,8 +100,9 @@ uint8_t read8(I2C_TypeDef* I2Cx, uint8_t reg, uint8_t addr)
 	I2C_AcknowledgeConfig(I2Cx,DISABLE);
 
 	//need to add a wait here for new data, right now it goes to fast to get the new data.
+	while(!I2C_GetFlagStatus(I2Cx,I2C_FLAG_RXNE));
 	data = I2C_ReceiveData(I2Cx);
-	while(!I2C_CheckEvent(I2Cx,I2C_EVENT_MASTER_BYTE_RECEIVED));
+	//while(!I2C_CheckEvent(I2Cx,I2C_EVENT_MASTER_BYTE_RECEIVED));
 
 	I2C_GenerateSTOP(I2Cx,ENABLE);
 	while(I2C_GetFlagStatus(I2Cx,	I2C_FLAG_STOPF));
