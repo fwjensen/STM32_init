@@ -25,7 +25,7 @@ void I2C_Initialise
 	uint16_t OwnAddress1
 );
 
-void write8
+void I2C_Write8
 (
 	I2C_TypeDef* I2Cx,
 	uint8_t addr,
@@ -33,7 +33,7 @@ void write8
 	uint8_t data
 );
 
-uint8_t send8
+uint8_t I2C_Read8
 (
 	I2C_TypeDef* I2Cx,
 	uint8_t addr,
