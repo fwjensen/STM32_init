@@ -29,4 +29,4 @@
 #define L3GD20H_REGISTER_OUT_Z_L 		((uint8_t)0x2C)
 #define L3GD20H_REGISTER_OUT_Z_H 		((uint8_t)0x2D)
 
-void L3GD20H_Initialize(I2C_TypeDef* I2Cx);
+void L3GD20H_Initialise(I2C_TypeDef* I2Cx);

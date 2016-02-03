@@ -3,6 +3,31 @@
   * @file    GPIO.c
   * @author  Fredrik Wigsnes
   *******************************************************************************
+  * @verbatim
+  *
+  *          ===================================================================
+  *                                 How to use this driver
+  *          ===================================================================
+  *          1.
+  *
+  *          2.
+  *
+  *          3.
+  *
+  *          4.
+  *
+  *          5.
+  *
+  *          6.
+  *
+  *          7.
+  *
+  *          8.
+  *
+  *          9.
+  *
+  * @endverbatim
+  ******************************************************************************
   * @attention
   *
   * MAY BE USED FREE OF CHARGE.
@@ -29,14 +54,14 @@
   * @param Speed	GPIO_Speed_x => x = 2MHz, 25MHz, 50MHz, 100MHz.
   *
   */
-void GPIO_Initialize(GPIO_TypeDef* GPIOx, GPIOMode_TypeDef Mode, GPIOOType_TypeDef OType, uint16_t Pin, GPIOPuPd_TypeDef PuPd, GPIOSpeed_TypeDef Speed)
+void GPIO_Initialise(GPIO_TypeDef* GPIOx, GPIOMode_TypeDef Mode, GPIOOType_TypeDef OType, uint16_t Pin, GPIOPuPd_TypeDef PuPd, GPIOSpeed_TypeDef Speed)
 {
 	GPIO_Pin_10;
 	GPIO_InitTypeDef GPIO_InitStruct;
 
-	RCC_GPIO_DeInit(GPIOx);
+	RCC_GPIO_DeInitialise(GPIOx);
 
-	RCC_GPIO_Init(GPIOx);
+	RCC_GPIO_Initialise(GPIOx);
 
 	GPIO_InitStruct.GPIO_Mode = Mode;
 	GPIO_InitStruct.GPIO_OType = OType;

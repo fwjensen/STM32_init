@@ -3,7 +3,32 @@
   * @file    I2C.c
   * @author  Fredrik Wigsnes
   *******************************************************************************
-  * @attention
+  * @verbatim
+  *
+  *          ===================================================================
+  *                                 How to use this driver
+  *          ===================================================================
+  *          1.
+  *
+  *          2.
+  *
+  *          3.
+  *
+  *          4.
+  *
+  *          5.
+  *
+  *          6.
+  *
+  *          7.
+  *
+  *          8.
+  *
+  *          9.
+  *
+  * @endverbatim
+  ******************************************************************************
+  *@attention
   *
   * MAY BE USED FREE OF CHARGE.
   * SELLING WITHOUT PRIOR WRITTEN CONSENT PROHIBITED.
@@ -20,7 +45,7 @@
 #include "RCC.h"
 
 /**
- * @brief Initializing the I2Cx.
+ * @brief Initialise for the I2Cx.
  *
  * @param I2Cx						x = 1, 2, 3.
  * @param Ack						I2C_Ack_x x => x = Enable, Disable.
@@ -31,19 +56,19 @@
  * @param OwnAddress1				Master address not relevant.
  *
  */
-void I2C_Initialize(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress, uint32_t ClockSpeed, uint16_t DutyCycle, uint16_t Mode, uint16_t OwnAddress1)
+void I2C_Initialise(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress, uint32_t ClockSpeed, uint16_t DutyCycle, uint16_t Mode, uint16_t OwnAddress1)
 {
 	if(I2Cx == I2C1){
-		GPIO_Initialize(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_6 | GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_6 | GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
 		GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_I2C1);
 		GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_I2C1);
 	}else if(I2Cx == I2C2){
-		GPIO_Initialize(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_10 | GPIO_Pin_11, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_10 | GPIO_Pin_11, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
 		GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_I2C2);
 		GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_I2C2);
 	}else if(I2Cx == I2C3){
-		GPIO_Initialize(GPIOA,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_8, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
-		GPIO_Initialize(GPIOC,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_8, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_Initialise(GPIOC,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
 		GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_I2C3);
 		GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_I2C3);
 	}else{
@@ -52,9 +77,9 @@ void I2C_Initialize(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 
 	I2C_InitTypeDef I2C_InitStruct;
 
-	RCC_I2C_DeInit(I2Cx);
+	RCC_I2C_DeInitialise(I2Cx);
 
-	RCC_I2C_Init(I2Cx);
+	RCC_I2C_Initialise(I2Cx);
 
 	I2C_InitStruct.I2C_Ack = Ack;
 	I2C_InitStruct.I2C_AcknowledgedAddress = AcknowledgedAdress;
@@ -68,7 +93,16 @@ void I2C_Initialize(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 	I2C_Cmd(I2Cx, ENABLE);
 }
 
-void write8(I2C_TypeDef* I2Cx,uint8_t addr, uint8_t reg, uint8_t data)
+/**
+ * @brief Read 8bits from the I2Cx.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ * @param addr		L3GD20H_ADDRESS, LSM303_ADDRESS, BMP180_ADDRESS or uint8_t value.
+ * @param reg		L3GD20H__REGISTER_, LSM303_REGISTER_, BMP180_REGISTER_ or uint8_t value.
+ * @param data		uint8_t value.
+ *
+ */
+void I2C_Write8(I2C_TypeDef* I2Cx,uint8_t addr, uint8_t reg, uint8_t data)
 {
 	I2C_AcknowledgeConfig(I2Cx,ENABLE);
 	while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY));
@@ -89,7 +123,15 @@ void write8(I2C_TypeDef* I2Cx,uint8_t addr, uint8_t reg, uint8_t data)
 	while(I2C_GetFlagStatus(I2Cx,I2C_FLAG_STOPF));
 }
 
-uint8_t read8(I2C_TypeDef* I2Cx, uint8_t addr, uint8_t reg)
+/**
+ * @brief Read 8bits from the I2Cx.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ * @param addr		L3GD20H_ADDRESS, LSM303_ADDRESS, BMP180_ADDRESS or uint8_t value.
+ * @param reg		L3GD20H__REGISTER_, LSM303_REGISTER_, BMP180_REGISTER_ or uint8_t value.
+ *
+ */
+uint8_t I2C_Read8(I2C_TypeDef* I2Cx, uint8_t addr, uint8_t reg)
 {
 	uint8_t data = 0;
 

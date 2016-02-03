@@ -14,7 +14,7 @@
 
 /*-----------------------------------------------------------------------------*/
 
-void GPIO_Initialize
+void GPIO_Initialise
 (
 	GPIO_TypeDef* GPIOx,
 	GPIOMode_TypeDef Mode,

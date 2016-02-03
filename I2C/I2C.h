@@ -14,7 +14,7 @@
 
 /*-----------------------------------------------------------------------------*/
 
-void I2C_Initialize
+void I2C_Initialise
 (
 	I2C_TypeDef* I2Cx,
 	uint16_t Ack,

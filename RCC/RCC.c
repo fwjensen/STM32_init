@@ -3,6 +3,31 @@
   * @file    RCC.c
   * @author  Fredrik Wigsnes
   *******************************************************************************
+  * @verbatim
+  *
+  *          ===================================================================
+  *                                 How to use this driver
+  *          ===================================================================
+  *          1.
+  *
+  *          2.
+  *
+  *          3.
+  *
+  *          4.
+  *
+  *          5.
+  *
+  *          6.
+  *
+  *          7.
+  *
+  *          8.
+  *
+  *          9.
+  *
+  * @endverbatim
+  ******************************************************************************
   * @attention
   *
   * MAY BE USED FREE OF CHARGE.
@@ -16,7 +41,13 @@
 
 #include "stm32f4xx_rcc.h"
 
-void RCC_GPIO_Init(GPIO_TypeDef* GPIOx)
+/**
+ * @brief Initialise GPIOx clock.
+ *
+ * @param GPIOx		x = A, B, C, D, E.
+ *
+ */
+void RCC_GPIO_Initialise(GPIO_TypeDef* GPIOx)
 {
   if (GPIOx == GPIOA)
   {
@@ -43,7 +74,13 @@ void RCC_GPIO_Init(GPIO_TypeDef* GPIOx)
   }
 }
 
-void RCC_GPIO_DeInit(GPIO_TypeDef* GPIOx)
+/**
+ * @brief DeInitialise GPIOx clock.
+ *
+ * @param GPIOx		x = A, B, C, D, E.
+ *
+ */
+void RCC_GPIO_DeInitialise(GPIO_TypeDef* GPIOx)
 {
 	if (GPIOx == GPIOA)
 	{
@@ -75,7 +112,13 @@ void RCC_GPIO_DeInit(GPIO_TypeDef* GPIOx)
 	}
 }
 
-void RCC_I2C_Init(I2C_TypeDef* I2Cx)
+/**
+ * @brief Initialise I2Cx clock.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ *
+ */
+void RCC_I2C_Initialise(I2C_TypeDef* I2Cx)
 {
 	if(I2Cx == I2C1)
 	{
@@ -94,7 +137,13 @@ void RCC_I2C_Init(I2C_TypeDef* I2Cx)
 	}
 }
 
-void RCC_I2C_DeInit(I2C_TypeDef* I2Cx)
+/**
+ * @brief DeInitialise I2Cx clock.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ *
+ */
+void RCC_I2C_DeInitialise(I2C_TypeDef* I2Cx)
 {
 	if(I2Cx == I2C1)
 	{
