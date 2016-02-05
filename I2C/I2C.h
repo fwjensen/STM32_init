@@ -39,3 +39,11 @@ uint8_t I2C_Read8
 	uint8_t addr,
 	uint8_t reg
 );
+
+uint16_t I2C_Read16
+(
+		I2C_TypeDef* I2Cx,
+		uint8_t addr,
+		uint8_t reg_MSB,
+		uint8_t reg_LSB
+);
