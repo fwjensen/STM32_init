@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
-  * @file    LSM303.h
-  * @author  Fredrik Wigsnes
+  * @file	LSM303.h
+  * @owner	ION Racing
   *******************************************************************************
   * @attention
   *
@@ -14,8 +14,8 @@
 
 /*-----------------------------------------------------------------------------*/
 
-#define LSM303_ADDRESS_ACCEL          (uint8_t)(0x32 >> 1)
-#define LSM303_ADDRESS_MAG            (uint8_t)(0x3C >> 1)
+#define LSM303_ADDRESS_ACCEL          (uint8_t)0x1E
+#define LSM303_ADDRESS_MAG            (uint8_t)0x19
 
 typedef enum
 {
@@ -69,3 +69,26 @@ typedef enum
 	LSM303_REGISTER_MAG_TEMP_OUT_H_M          = 0x31,
 	LSM303_REGISTER_MAG_TEMP_OUT_L_M          = 0x32
 } lsm303MagRegisters_t;
+
+typedef enum
+{
+	LSM303_MAGGAIN_1_3                        = 0x20,  // +/- 1.3
+	LSM303_MAGGAIN_1_9                        = 0x40,  // +/- 1.9
+	LSM303_MAGGAIN_2_5                        = 0x60,  // +/- 2.5
+	LSM303_MAGGAIN_4_0                        = 0x80,  // +/- 4.0
+	LSM303_MAGGAIN_4_7                        = 0xA0,  // +/- 4.7
+	LSM303_MAGGAIN_5_6                        = 0xC0,  // +/- 5.6
+	LSM303_MAGGAIN_8_1                        = 0xE0   // +/- 8.1
+} lsm303MagGain;
+
+typedef enum
+{
+	LSM303_MAGRATE_0_7                        = 0x00,  // 0.75 Hz
+	LSM303_MAGRATE_1_5                        = 0x01,  // 1.5 Hz
+	LSM303_MAGRATE_3_0                        = 0x62,  // 3.0 Hz
+	LSM303_MAGRATE_7_5                        = 0x03,  // 7.5 Hz
+	LSM303_MAGRATE_15                         = 0x04,  // 15 Hz
+	LSM303_MAGRATE_30                         = 0x05,  // 30 Hz
+	LSM303_MAGRATE_75                         = 0x06,  // 75 Hz
+	LSM303_MAGRATE_220                        = 0x07   // 200 Hz
+} lsm303MagRate;
