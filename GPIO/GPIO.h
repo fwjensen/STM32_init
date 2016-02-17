@@ -23,3 +23,11 @@ void GPIO_Initialise
 	GPIOPuPd_TypeDef PuPd,
 	GPIOSpeed_TypeDef Speed
 );
+void RCC_GPIO_Initialise
+(
+	GPIO_TypeDef* GPIOx
+);
+void RCC_GPIO_DeInitialise
+(
+	I2C_TypeDef* I2Cx
+);

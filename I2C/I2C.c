@@ -42,7 +42,6 @@
 #include "stm32f4xx_i2c.h"
 #include "stm32f4xx_gpio.h"
 #include "GPIO.h"
-#include "RCC.h"
 
 /**
  * @brief Initialise for the I2Cx.
@@ -189,3 +188,57 @@ uint16_t I2C_Read16(I2C_TypeDef* I2Cx, uint8_t addr, uint8_t reg_MSB, uint8_t re
 
 	return data;
 }
+
+/**
+ * @brief Initialise I2Cx clock.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ *
+ */
+void RCC_I2C_Initialise(I2C_TypeDef* I2Cx)
+{
+	if(I2Cx == I2C1)
+	{
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1,ENABLE);
+	}
+	else if(I2Cx == I2C2)
+	{
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2,ENABLE);
+	}
+	else if(I2Cx == I2C3)
+	{
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C3,ENABLE);
+	}
+	else
+	{
+	}
+}
+
+/**
+ * @brief DeInitialise I2Cx clock.
+ *
+ * @param I2Cx		x = 1, 2, 3.
+ *
+ */
+void RCC_I2C_DeInitialise(I2C_TypeDef* I2Cx)
+{
+	if(I2Cx == I2C1)
+	{
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1,ENABLE);
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1,DISABLE);
+	}
+	else if(I2Cx == I2C2)
+	{
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2,ENABLE);
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2,DISABLE);
+	}
+	else if(I2Cx == I2C3)
+	{
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C3,ENABLE);
+		RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C3,DISABLE);
+	}
+	else
+	{
+	}
+}
+
