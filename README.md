@@ -2,13 +2,13 @@
 
 ION Racing 2016
 
-[X] - GPIO
-[X] - I2C
-[X] - Barometric Pressure
-[X] - Gyroscope
-[ ] - Accelerometer
-[ ] - Usart
-[ ] - Can
-[ ] - 
-[ ] - 
-[ ] - 
+
+```
+
+* [X] - GPIO
+* [X] - I2C
+* [X] - Barometric Pressure
+* [X] - Gyroscope
+* [ ] - Accelerometer
+* [ ] - Usart
+* [ ] - CAN
