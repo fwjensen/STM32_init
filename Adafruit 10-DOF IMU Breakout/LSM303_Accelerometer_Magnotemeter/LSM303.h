@@ -1,19 +1,3 @@
-/**
-  ******************************************************************************
-  * @file	LSM303.h
-  * @owner	ION Racing
-  *******************************************************************************
-  * @attention
-  *
-  * MAY BE USED FREE OF CHARGE.
-  * SELLING WITHOUT PRIOR WRITTEN CONSENT PROHIBITED.
-  *
-  * <h2><center>&copy; COPYRIGHT 2016 ION Racing</center></h2>
-  ******************************************************************************
-  */
-
-/*-----------------------------------------------------------------------------*/
-
 #define LSM303_ADDRESS_ACCEL          (uint8_t)0x1E
 #define LSM303_ADDRESS_MAG            (uint8_t)0x19
 
