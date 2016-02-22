@@ -10,7 +10,7 @@
  * USART_InitStructure.USART_Mode = USART_Mode_Rx;
  * USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
  */
-void Initialize_UART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
+void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
 {
 	USART_InitTypeDef USART_InitStruct;
 
@@ -31,6 +31,7 @@ void Initialize_UART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLen
 
 	//Enable RX interrupt
 	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
+	NVIC_USART_Initialise(USARTx);
 }
 
 void GPIO_USART_Initialise(USART_TypeDef * USARTx){
@@ -95,4 +96,49 @@ void RCC_USART_Initialise(USART_TypeDef * USARTx)
 	{
 		while(1);
 	}
+}
+
+
+/*
+ * NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQn;
+ * NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+ * NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+ * NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+ */
+void NVIC_USART_Initialise(USART_TypeDef * USARTx){
+	NVIC_InitTypeDef NVIC_InitStruct;
+
+	if(USARTx == USART1)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQn;
+	}
+	else if(USARTx == USART2)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = USART2_IRQn;
+	}
+	else if(USARTx == USART3)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = USART3_IRQn;
+	}
+	else if(USARTx == UART4)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = UART4_IRQn;
+	}
+	else if(USARTx == UART5)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = UART5_IRQn;
+	}
+	else if(USARTx == USART6)
+	{
+		NVIC_InitStruct.NVIC_IRQChannel = USART6_IRQn;
+	}
+	else
+	{
+		while(1);
+	}
+
+	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+	NVIC_Init(&NVIC_InitStruct);
 }
