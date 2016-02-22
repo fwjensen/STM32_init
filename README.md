@@ -15,5 +15,7 @@ ION Racing 2016
 
 
 git add *
+
 git commit -m ""
+
 git push origin developerMikal
