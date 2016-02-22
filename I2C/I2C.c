@@ -16,24 +16,9 @@
  */
 void I2C_Initialise(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress, uint32_t ClockSpeed, uint16_t DutyCycle, uint16_t Mode, uint16_t OwnAddress1)
 {
-	if(I2Cx == I2C1){
-		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_6 | GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_I2C1);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_I2C1);
-	}else if(I2Cx == I2C2){
-		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_10 | GPIO_Pin_11, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_I2C2);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_I2C2);
-	}else if(I2Cx == I2C3){
-		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_8, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
-		GPIO_Initialise(GPIOC,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_I2C3);
-		GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_I2C3);
-	}else{
-	 while(1);
-	}
-
 	I2C_InitTypeDef I2C_InitStruct;
+
+	GPIO_I2C_Initialise(I2Cx);
 
 	RCC_I2C_DeInitialise(I2Cx);
 
@@ -49,6 +34,33 @@ void I2C_Initialise(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 	I2C_Init(I2Cx,&I2C_InitStruct);
 
 	I2C_Cmd(I2Cx, ENABLE);
+}
+
+void GPIO_I2C_Initialise(I2C_TypeDef* I2Cx)
+{
+	if(I2Cx == I2C1)
+	{
+		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_6 | GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_I2C1);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_I2C1);
+	}
+	else if(I2Cx == I2C2)
+	{
+		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_10 | GPIO_Pin_11, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_I2C2);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_I2C2);
+	}
+	else if(I2Cx == I2C3)
+	{
+		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_8, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_Initialise(GPIOC,GPIO_Mode_AF,GPIO_OType_OD,GPIO_Pin_9, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_I2C3);
+		GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_I2C3);
+	}
+	else
+	{
+		while(1);
+	}
 }
 
 /**
