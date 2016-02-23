@@ -2,7 +2,7 @@
 #include "GPIO.h"
 
 /**
-  * @brief Initializing the GPIOx.
+  * @brief Initialising the GPIOx.
   *
   * @param GPIOx	x = A, B, C, D, E.
   * @param Mode		GPIO_Mode_x => x = AF, AN, IN, OUT.

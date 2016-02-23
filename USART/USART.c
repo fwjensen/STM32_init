@@ -2,7 +2,7 @@
 #include "stm32f4xx_rcc.h"
 #include "GPIO.h"
 
-/*
+/**
  * USART_InitStructure.USART_BaudRate = 9600;
  * USART_InitStructure.USART_WordLength = USART_WordLength_8b;
  * USART_InitStructure.USART_StopBits = USART_StopBits_1;
@@ -10,9 +10,23 @@
  * USART_InitStructure.USART_Mode = USART_Mode_Rx;
  * USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
  */
+/**
+ * @brief Initialising U(S)ARTx.
+ *
+ * @param USARTx/UARTx				x = 1, 2, 3, 4, 5, 6.
+ * @param BaudRate					example 9600.
+ * @param WordLength				USART_WordLength_x => x = 8b, 9b.
+ * @param StopBits					USART_StopBits_x => x = 0_5, 1, 1_5, 2.
+ * @param Parity					USART_Parity_x => x = Even, No, Odd.
+ * @param Mode						USART_Mode_x => x = Rx, Tx.
+ * @param HardwareFlowControl		USART_HardwareFlowControl_x => x = CTS, None, RTS, RTS_CTS.
+ *
+ */
 void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
 {
 	USART_InitTypeDef USART_InitStruct;
+
+	USART_HardwareFlowControl_
 
 	GPIO_USART_Initialise(USARTx);
 
@@ -33,7 +47,12 @@ void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
 	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
 	NVIC_USART_Initialise(USARTx);
 }
-
+/**
+ * @brief Initialise USARTx GPIO.
+ *
+ * @param USARTx		x = 1, 2, 3, 4, 5, 6.
+ *
+ */
 void GPIO_USART_Initialise(USART_TypeDef * USARTx){
 	if(USARTx == USART1)
 	{
@@ -66,6 +85,12 @@ void GPIO_USART_Initialise(USART_TypeDef * USARTx){
 	}
 }
 
+/**
+ * @brief Initialise USARTx RCC.
+ *
+ * @param USARTx		x = 1, 2, 3, 4, 5, 6.
+ *
+ */
 void RCC_USART_Initialise(USART_TypeDef * USARTx)
 {
 	if(USARTx == USART1)
@@ -99,11 +124,11 @@ void RCC_USART_Initialise(USART_TypeDef * USARTx)
 }
 
 
-/*
- * NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQn;
- * NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
- * NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
- * NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+/**
+ * @brief Initialise USARTx NVIC.
+ *
+ * @param USARTx		x = 1, 2, 3, 4, 5, 6.
+ *
  */
 void NVIC_USART_Initialise(USART_TypeDef * USARTx){
 	NVIC_InitTypeDef NVIC_InitStruct;
