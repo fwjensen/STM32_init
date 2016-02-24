@@ -3,14 +3,6 @@
 #include "GPIO.h"
 
 /**
- * USART_InitStructure.USART_BaudRate = 9600;
- * USART_InitStructure.USART_WordLength = USART_WordLength_8b;
- * USART_InitStructure.USART_StopBits = USART_StopBits_1;
- * USART_InitStructure.USART_Parity = USART_Parity_No;
- * USART_InitStructure.USART_Mode = USART_Mode_Rx;
- * USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
- */
-/**
  * @brief Initialising U(S)ARTx.
  *
  * @param USARTx/UARTx				x = 1, 2, 3, 4, 5, 6.
@@ -22,7 +14,7 @@
  * @param HardwareFlowControl		USART_HardwareFlowControl_x => x = CTS, None, RTS, RTS_CTS.
  *
  */
-void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
+void USART_Initialize(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
 {
 	USART_InitTypeDef USART_InitStruct;
 
@@ -53,7 +45,8 @@ void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
  * @param USARTx		x = 1, 2, 3, 4, 5, 6.
  *
  */
-void GPIO_USART_Initialise(USART_TypeDef * USARTx){
+void GPIO_USART_Initialise(USART_TypeDef * USARTx)
+{
 	if(USARTx == USART1)
 	{
 		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_9 | GPIO_Pin_10, GPIO_PuPd_UP,GPIO_Speed_50MHz);
@@ -130,7 +123,8 @@ void RCC_USART_Initialise(USART_TypeDef * USARTx)
  * @param USARTx		x = 1, 2, 3, 4, 5, 6.
  *
  */
-void NVIC_USART_Initialise(USART_TypeDef * USARTx){
+void NVIC_USART_Initialise(USART_TypeDef * USARTx)
+{
 	NVIC_InitTypeDef NVIC_InitStruct;
 
 	if(USARTx == USART1)

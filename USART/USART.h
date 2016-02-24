@@ -1,4 +1,4 @@
-void Initialize_UART
+void USART_Initialize
 (
 	USART_TypeDef * USARTx,
 	uint32_t BaudRate,
