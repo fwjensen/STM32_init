@@ -26,8 +26,6 @@ void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
 {
 	USART_InitTypeDef USART_InitStruct;
 
-	USART_HardwareFlowControl_
-
 	GPIO_USART_Initialise(USARTx);
 
 	RCC_USART_Initialise(USARTx);
@@ -47,6 +45,7 @@ void Initialize_USART(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
 	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
 	NVIC_USART_Initialise(USARTx);
 }
+
 /**
  * @brief Initialise USARTx GPIO.
  *
@@ -123,7 +122,6 @@ void RCC_USART_Initialise(USART_TypeDef * USARTx)
 	}
 }
 
-
 /**
  * @brief Initialise USARTx NVIC.
  *
@@ -166,4 +164,12 @@ void NVIC_USART_Initialise(USART_TypeDef * USARTx){
 	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
 	NVIC_Init(&NVIC_InitStruct);
+}
+
+void USART_Write(USART_TypeDef * USARTx, uint16_t Data){
+	USART_SendData(USARTx,Data);
+}
+
+uint16_t USART_Read(USART_TypeDef * USARTx){
+	return USART_ReceiveData(USARTx);
 }
