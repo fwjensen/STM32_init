@@ -5,6 +5,9 @@
 #include "USART.h"
 #include "misc.h"
 
+static uint16_t num[1024];
+static int p = 0;
+
 /**
  * @brief Initialising U(S)ARTx.
  *
@@ -17,13 +20,13 @@
  * @param HardwareFlowControl		USART_HardwareFlowControl_x => x = CTS, None, RTS, RTS_CTS.
  *
  */
-void USART_Initialize(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
+void USART_Initialize(USART_TypeDef* USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
 {
 	USART_InitTypeDef USART_InitStruct;
 
-	GPIO_USART_Initialise(USARTx);
+	USART_GPIO_Initialise(USARTx);
 
-	RCC_USART_Initialise(USARTx);
+	USART_RCC_Initialise(USARTx);
 
 	USART_InitStruct.USART_BaudRate = BaudRate;
 	USART_InitStruct.USART_WordLength = WordLength;
@@ -38,7 +41,7 @@ void USART_Initialize(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
 
 	//Enable RX interrupt
 	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
-	NVIC_USART_Initialise(USARTx);
+	USART_NVIC_Initialise(USARTx);
 }
 
 /**
@@ -47,7 +50,7 @@ void USART_Initialize(USART_TypeDef * USARTx, uint32_t BaudRate, uint16_t WordLe
  * @param USARTx		x = 1, 2, 3, 4, 5, 6.
  *
  */
-void GPIO_USART_Initialise(USART_TypeDef * USARTx)
+void USART_GPIO_Initialise(USART_TypeDef * USARTx)
 {
 	if(USARTx == USART1)
 	{
@@ -86,7 +89,7 @@ void GPIO_USART_Initialise(USART_TypeDef * USARTx)
  * @param USARTx		x = 1, 2, 3, 4, 5, 6.
  *
  */
-void RCC_USART_Initialise(USART_TypeDef * USARTx)
+void USART_RCC_Initialise(USART_TypeDef * USARTx)
 {
 	if(USARTx == USART1)
 	{
@@ -124,7 +127,7 @@ void RCC_USART_Initialise(USART_TypeDef * USARTx)
  * @param USARTx		x = 1, 2, 3, 4, 5, 6.
  *
  */
-void NVIC_USART_Initialise(USART_TypeDef * USARTx)
+void USART_NVIC_Initialise(USART_TypeDef * USARTx)
 {
 	NVIC_InitTypeDef NVIC_InitStruct;
 
@@ -170,8 +173,8 @@ void USART_Write(USART_TypeDef * USARTx, uint16_t Data)
 
 void USART_Read(USART_TypeDef * USARTx)
 {
-	//num[i++] = USART_ReceiveData(USARTx);
-	//if(i == 1024){
-	//	i = 0;
-	//}
+	num[p++] = USART_ReceiveData(USARTx);
+	if(p == 1024){
+		p = 0;
+	}
 }

@@ -10,20 +10,21 @@ void USART_Initialize
 	uint16_t HardwareFlowControl
 );
 
-void GPIO_USART_Initialise
+void USART_GPIO_Initialise
 (
 	USART_TypeDef * USARTx
 );
 
-void RCC_USART_Initialise
+void USART_RCC_Initialise
 (
 	USART_TypeDef * USARTx
 );
 
-void NVIC_USART_Initialise
+void USART_NVIC_Initialise
 (
 	USART_TypeDef * USARTx
 );
-
-//uint16_t num[1024];
-//int i = 0;
+void USART_Read
+(
+		USART_TypeDef * USARTx
+);
