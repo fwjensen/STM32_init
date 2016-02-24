@@ -1,3 +1,4 @@
+#include "stm32f4xx_gpio.h"
 void GPIO_Initialise
 (
 	GPIO_TypeDef* GPIOx,
@@ -13,5 +14,5 @@ void RCC_GPIO_Initialise
 );
 void RCC_GPIO_DeInitialise
 (
-	I2C_TypeDef* I2Cx
+	GPIO_TypeDef* I2Cx
 );

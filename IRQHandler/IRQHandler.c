@@ -1,15 +1,16 @@
 #include "stm32f4xx_usart.h"
+#include "USART.h"
 
 void USART1_IRQHandler(void){
 	// check if the USART1 receive interrupt flag was set
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET){
-
+		USART_Read(USART1);
 	}
 }
 void USART2_IRQHandler(void){
 	// check if the USART1 receive interrupt flag was set
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET){
-
+		USART_Read(USART2);
 	}
 }
 void USART3_IRQHandler(void){

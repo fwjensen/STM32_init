@@ -1,6 +1,8 @@
 #include "stm32f4xx_i2c.h"
 #include "stm32f4xx_gpio.h"
+#include "stm32f4xx_rcc.h"
 #include "GPIO.h"
+#include "I2C.h"
 
 /**
  * @brief Initialise for the I2Cx.
@@ -18,11 +20,11 @@ void I2C_Initialise(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 {
 	I2C_InitTypeDef I2C_InitStruct;
 
-	GPIO_I2C_Initialise(I2Cx);
+	I2C_GPIO_Initialise(I2Cx);
 
-	RCC_I2C_DeInitialise(I2Cx);
+	I2C_RCC_DeInitialise(I2Cx);
 
-	RCC_I2C_Initialise(I2Cx);
+	I2C_RCC_Initialise(I2Cx);
 
 	I2C_InitStruct.I2C_Ack = Ack;
 	I2C_InitStruct.I2C_AcknowledgedAddress = AcknowledgedAdress;
@@ -36,7 +38,7 @@ void I2C_Initialise(I2C_TypeDef* I2Cx, uint16_t Ack, uint16_t AcknowledgedAdress
 	I2C_Cmd(I2Cx, ENABLE);
 }
 
-void GPIO_I2C_Initialise(I2C_TypeDef* I2Cx)
+void I2C_GPIO_Initialise(I2C_TypeDef* I2Cx)
 {
 	if(I2Cx == I2C1)
 	{
@@ -166,7 +168,7 @@ uint16_t I2C_Read16(I2C_TypeDef* I2Cx, uint8_t addr, uint8_t reg_MSB, uint8_t re
  * @param I2Cx		x = 1, 2, 3.
  *
  */
-void RCC_I2C_Initialise(I2C_TypeDef* I2Cx)
+void I2C_RCC_Initialise(I2C_TypeDef* I2Cx)
 {
 	if(I2Cx == I2C1)
 	{
@@ -191,7 +193,7 @@ void RCC_I2C_Initialise(I2C_TypeDef* I2Cx)
  * @param I2Cx		x = 1, 2, 3.
  *
  */
-void RCC_I2C_DeInitialise(I2C_TypeDef* I2Cx)
+void I2C_RCC_DeInitialise(I2C_TypeDef* I2Cx)
 {
 	if(I2Cx == I2C1)
 	{

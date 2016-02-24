@@ -1,6 +1,9 @@
 #include "stm32f4xx_usart.h"
 #include "stm32f4xx_rcc.h"
+#include "stm32f4xx_gpio.h"
 #include "GPIO.h"
+#include "USART.h"
+#include "misc.h"
 
 /**
  * @brief Initialising U(S)ARTx.
@@ -165,7 +168,10 @@ void USART_Write(USART_TypeDef * USARTx, uint16_t Data)
 	USART_SendData(USARTx,Data);
 }
 
-uint16_t USART_Read(USART_TypeDef * USARTx)
+void USART_Read(USART_TypeDef * USARTx)
 {
-	return USART_ReceiveData(USARTx);
+	//num[i++] = USART_ReceiveData(USARTx);
+	//if(i == 1024){
+	//	i = 0;
+	//}
 }

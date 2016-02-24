@@ -40,3 +40,15 @@ void RCC_I2C_DeInitialise
 (
 	I2C_TypeDef* I2Cx
 );
+void I2C_GPIO_Initialise
+(
+	I2C_TypeDef* I2Cx
+);
+void I2C_RCC_DeInitialise
+(
+	I2C_TypeDef* I2Cx
+);
+void I2C_RCC_Initialise
+(
+	I2C_TypeDef* I2Cx
+);

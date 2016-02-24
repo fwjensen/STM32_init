@@ -1,3 +1,4 @@
+#include "stm32f4xx_usart.h"
 void USART_Initialize
 (
 	USART_TypeDef * USARTx,
@@ -23,3 +24,6 @@ void NVIC_USART_Initialise
 (
 	USART_TypeDef * USARTx
 );
+
+//uint16_t num[1024];
+//int i = 0;
