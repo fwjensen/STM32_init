@@ -8,9 +8,12 @@ void USART1_IRQHandler(void){
 	}
 }
 void USART2_IRQHandler(void){
-	// check if the USART1 receive interrupt flag was set
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET){
+	// check if the USART2 receive interrupt flag was set
+	if(USART_GetITStatus(USART2,USART_IT_RXNE) != RESET)
+	{
+		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
 		USART_Read(USART2);
+
 	}
 }
 void USART3_IRQHandler(void){

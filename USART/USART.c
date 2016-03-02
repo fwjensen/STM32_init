@@ -5,8 +5,8 @@
 #include "USART.h"
 #include "misc.h"
 
-static uint16_t num[1024];
-static int p = 0;
+volatile char num[1024];
+volatile int p = 0;
 
 /**
  * @brief Initialising U(S)ARTx.
@@ -22,11 +22,11 @@ static int p = 0;
  */
 void USART_Initialize(USART_TypeDef* USARTx, uint32_t BaudRate, uint16_t WordLength, uint16_t StopBits, uint16_t Parity, uint16_t Mode, uint16_t HardwareFlowControl)
 {
-	USART_InitTypeDef USART_InitStruct;
+	USART_RCC_Initialise(USARTx);
 
 	USART_GPIO_Initialise(USARTx);
 
-	USART_RCC_Initialise(USARTx);
+	USART_InitTypeDef USART_InitStruct;
 
 	USART_InitStruct.USART_BaudRate = BaudRate;
 	USART_InitStruct.USART_WordLength = WordLength;
@@ -37,10 +37,10 @@ void USART_Initialize(USART_TypeDef* USARTx, uint32_t BaudRate, uint16_t WordLen
 
 	USART_Init(USARTx, &USART_InitStruct);
 
+	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
+
 	USART_Cmd(USARTx, ENABLE);
 
-	//Enable RX interrupt
-	USART_ITConfig(USARTx, USART_IT_RXNE, ENABLE);
 	USART_NVIC_Initialise(USARTx);
 }
 
@@ -54,28 +54,46 @@ void USART_GPIO_Initialise(USART_TypeDef * USARTx)
 {
 	if(USARTx == USART1)
 	{
+		//Pin9 - Tx, Pin10 - Rx.
 		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_9 | GPIO_Pin_10, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1); //Tx
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1); //Rx
 	}
 	else if(USARTx == USART2)
 	{
-		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_2 | GPIO_Pin_3, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		//Pin2 - Tx, Pin3 - Rx.
+		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_2 | GPIO_Pin_3, GPIO_PuPd_NOPULL,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2); //Tx
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2); //Rx
 	}
 	else if(USARTx == USART3)
 	{
+		//Pin10 - Tx, Pin11 - Rx.
 		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_10 | GPIO_Pin_11, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_USART3); //Tx
+		GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_USART3); //Rx
 	}
 	else if(USARTx == UART4)
 	{
+		//Pin0 - Tx, Pin1 - Rx.
 		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_0 | GPIO_Pin_1, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_UART4); //Tx
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource1, GPIO_AF_UART4); //Rx
 	}
 	else if(USARTx == UART5)
 	{
+		//Pin12 - Tx, Pin2 - Rx.
 		GPIO_Initialise(GPIOC,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_12, GPIO_PuPd_UP,GPIO_Speed_50MHz);
 		GPIO_Initialise(GPIOD,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_2, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOC, GPIO_PinSource12, GPIO_AF_UART5); //Tx
+		GPIO_PinAFConfig(GPIOD, GPIO_PinSource2, GPIO_AF_UART5); //Rx
 	}
 	else if(USARTx == USART6)
 	{
+		//Pin6 - Tx, Pin7 - Rx.
 		GPIO_Initialise(GPIOC,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_6 | GPIO_Pin_7, GPIO_PuPd_UP,GPIO_Speed_50MHz);
+		GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6); //Tx
+		GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6); //Rx
 	}
 	else
 	{
@@ -113,7 +131,7 @@ void USART_RCC_Initialise(USART_TypeDef * USARTx)
 	}
 	else if(USARTx == USART6)
 	{
-		RCC_APB1PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 	}
 	else
 	{
@@ -162,7 +180,7 @@ void USART_NVIC_Initialise(USART_TypeDef * USARTx)
 
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
 	NVIC_Init(&NVIC_InitStruct);
 }
 

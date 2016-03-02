@@ -15,11 +15,11 @@
   */
 void GPIO_Initialise(GPIO_TypeDef* GPIOx, GPIOMode_TypeDef Mode, GPIOOType_TypeDef OType, uint16_t Pin, GPIOPuPd_TypeDef PuPd, GPIOSpeed_TypeDef Speed)
 {
-	GPIO_InitTypeDef GPIO_InitStruct;
-
 	RCC_GPIO_DeInitialise(GPIOx);
 
 	RCC_GPIO_Initialise(GPIOx);
+
+	GPIO_InitTypeDef GPIO_InitStruct;
 
 	GPIO_InitStruct.GPIO_Mode = Mode;
 	GPIO_InitStruct.GPIO_OType = OType;
@@ -29,6 +29,7 @@ void GPIO_Initialise(GPIO_TypeDef* GPIOx, GPIOMode_TypeDef Mode, GPIOOType_TypeD
 
 	GPIO_Init(GPIOx,&GPIO_InitStruct);
 }
+
 /**
  * @brief Initialise GPIOx clock.
  *
