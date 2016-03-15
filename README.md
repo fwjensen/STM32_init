@@ -10,7 +10,7 @@ ION Racing 2016
 * [X] - Barometric Pressure
 * [X] - Gyroscope
 * [ ] - Accelerometer
-* [ ] - Usart
+* [X] - Usart
 * [ ] - CAN
 
 
