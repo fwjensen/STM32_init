@@ -29,9 +29,9 @@ void CAN_Initialise(CAN_TypeDef * CANx)
     
     
 	/* CAN Baudrate = 500 KBps (CAN clocked at 42 MHz) */
-	CAN_InitStruct.CAN_BS1 = CAN_BS1_4tq;
-	CAN_InitStruct.CAN_BS2 = CAN_BS2_2tq;
-	CAN_InitStruct.CAN_Prescaler = (42000000 / 7) / 500000; //12
+	CAN_InitStruct.CAN_BS1 = CAN_BS1_10tq; //CAN_BS1_4tq;
+	CAN_InitStruct.CAN_BS2 = CAN_BS1_1tq; //CAN_BS2_2tq;
+	CAN_InitStruct.CAN_Prescaler = 5;//(42000000 / 7) / 500000; -> 12
 	CAN_Init(CANx, &CAN_InitStruct);
 
 	/* CAN filter init */
@@ -99,10 +99,10 @@ uint8_t CAN_Write(uint32_t address, uint8_t length, uint8_t data[8])
 	msg.RTR		= CAN_RTR_Data;
 	msg.DLC		= length;
     
-	for(i=0; i < length; i++){
+	for(i=0; i < length; i++)
+    {
 		msg.Data[i] = data[i];
 	}
- 
 	return CAN_Transmit(CAN2, &msg);
 }
 
@@ -118,7 +118,6 @@ void CAN2_RX0_IRQHandler (void){
 	if(CAN2->RF0R & CAN_RF0R_FMP0)
 	{
 		CAN_Receive(CAN2, CAN_FIFO0, &msgRx);
-		
 	}
 	__enable_irq();
 }

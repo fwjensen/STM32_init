@@ -10,7 +10,7 @@ int32_t  UT = 0, UP = 0, X1 = 0, X2 = 0, B5 = 0, T = 0, B6 = 0, X3 = 0, B3 = 0, 
 //unsigned long
 uint32_t B4 = 0, B7 = 0;
 
-int x = 0;
+int time = 0;
 
 /**
  * @brief Initialise for the BMP180.
@@ -41,7 +41,7 @@ void BMP180_CalibrationData(I2C_TypeDef* I2Cx)
 int32_t BMP180_Temperature(I2C_TypeDef* I2Cx,bmp180Oss_t oss)
 {
 	I2C_Write8(I2Cx,BMP180_ADDRESS,BMP180_CONTROL,BMP180_READTEMPCMD);
-	for(x = 0;x < 0xfff;x++); // wait 4.5ms
+	for(time = 0;time < 0xFFF;time++); // wait 4.5ms
 	UT = I2C_Read16(I2Cx,BMP180_ADDRESS,BMP180_TEMPDATA_MSB,BMP180_TEMPDATA_LSB);
 
 	X1 = (UT - AC6) * AC5 / 32768;
@@ -54,7 +54,7 @@ int32_t BMP180_Temperature(I2C_TypeDef* I2Cx,bmp180Oss_t oss)
 int32_t BMP180_Pressure(I2C_TypeDef* I2Cx,bmp180Oss_t oss)
 {
 	I2C_Write8(I2Cx,BMP180_ADDRESS,BMP180_CONTROL,BMP180_READPRESSURECMD+(oss<<6));
-	for(x = 0;x < 0xfff;x++); //wait?
+	for(time = 0;time < 0xfff;time++); //wait?
 	UP = (I2C_Read16(I2Cx,BMP180_ADDRESS,BMP180_PRESSUREDATA_MSB,BMP180_PRESSUREDATA_LSB)<<8)+(I2C_Read8(I2Cx,BMP180_ADDRESS,BMP180_PRESSUREDATA_XLSB)>>(8-oss));
 
 	B6 = B5 - 4000;
