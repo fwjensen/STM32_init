@@ -1,3 +1,5 @@
+#include "stm32f4xx.h"
+
 #define LSM303_ADDRESS_ACCEL          (uint8_t)0x1E
 #define LSM303_ADDRESS_MAG            (uint8_t)0x19
 
@@ -33,7 +35,7 @@ typedef enum
 	LSM303_REGISTER_ACCEL_TIME_LIMIT_A        = 0x3B,
 	LSM303_REGISTER_ACCEL_TIME_LATENCY_A      = 0x3C,
 	LSM303_REGISTER_ACCEL_TIME_WINDOW_A       = 0x3D
-} lsm303AccelRegisters_t;
+}lsm303AccelRegisters_t;
 
 typedef enum
 {
@@ -52,7 +54,7 @@ typedef enum
 	LSM303_REGISTER_MAG_IRC_REG_M             = 0x0C,
 	LSM303_REGISTER_MAG_TEMP_OUT_H_M          = 0x31,
 	LSM303_REGISTER_MAG_TEMP_OUT_L_M          = 0x32
-} lsm303MagRegisters_t;
+}lsm303MagRegisters_t;
 
 typedef enum
 {
@@ -63,7 +65,7 @@ typedef enum
 	LSM303_MAGGAIN_4_7                        = 0xA0,  // +/- 4.7
 	LSM303_MAGGAIN_5_6                        = 0xC0,  // +/- 5.6
 	LSM303_MAGGAIN_8_1                        = 0xE0   // +/- 8.1
-} lsm303MagGain;
+}lsm303MagGain;
 
 typedef enum
 {
@@ -76,3 +78,32 @@ typedef enum
 	LSM303_MAGRATE_75                         = 0x06,  // 75 Hz
 	LSM303_MAGRATE_220                        = 0x07   // 200 Hz
 } lsm303MagRate;
+
+void LSM303_Initialise(void);
+void GPIO_Initialise(void);
+void I2C_Initialise(void);
+void I2C_Write8
+(
+    uint8_t addr, 
+    uint8_t reg, 
+    uint8_t data
+);
+uint8_t I2C_Read8
+(
+    uint8_t addr, 
+    uint8_t reg
+);
+uint16_t I2C_Read16
+(
+    uint8_t addr, 
+    uint8_t reg_MSB, 
+    uint8_t reg_LSB
+);
+uint16_t LSM303_ACCEL_X(void);
+uint16_t LSM303_ACCEL_Y(void);
+uint16_t LSM303_ACCEL_Z(void);
+uint16_t LSM303_ACCEL_XYZ(void);
+uint16_t LSM303_MAG_X(void);
+uint16_t LSM303_MAG_Y(void);
+uint16_t LSM303_MAG_Z(void);
+uint16_t LSM303_MAG_XYZ(void);

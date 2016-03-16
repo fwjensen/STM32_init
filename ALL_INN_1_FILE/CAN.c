@@ -1,23 +1,19 @@
-#include "CAN.h"
-#include "GPIO.h"
 #include "stm32f4xx_can.h"
 #include "stm32f4xx_gpio.h"
+#include "CAN.h"
 
-/**
- * 
- * 
- */
-void CAN_Initialise(CAN_TypeDef * CANx)
+void CAN_Initialise()
 {
 	CAN_InitTypeDef CAN_InitStruct;
     CAN_FilterInitTypeDef  CAN_FilterInitStructure;
 	
-	CAN_GPIO_Initialise(CANx);
+	void GPIO_Initialise();
 	
-	CAN_RCC_Initialise(CANx);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1,ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN2,ENABLE);
 	
 	/* CAN register init */
-	CAN_DeInit(CANx);
+	CAN_DeInit(CAN2);
 	
 	/* CAN cell init */
 	CAN_InitStruct.CAN_TTCM = DISABLE;
@@ -31,12 +27,11 @@ void CAN_Initialise(CAN_TypeDef * CANx)
 
     //Bus length 3-5m.
     
-    
 	/* CAN Baudrate = 500 KBps (CAN clocked at 42 MHz) */
 	CAN_InitStruct.CAN_BS1 = CAN_BS1_4tq;
 	CAN_InitStruct.CAN_BS2 = CAN_BS2_2tq;
 	CAN_InitStruct.CAN_Prescaler = (42000000 / 7) / 500000; //12
-	CAN_Init(CANx, &CAN_InitStruct);
+	CAN_Init(CAN2, &CAN_InitStruct);
 
 	/* CAN filter init */
 	CAN_FilterInitStructure.CAN_FilterNumber = 0;
@@ -51,45 +46,28 @@ void CAN_Initialise(CAN_TypeDef * CANx)
 	CAN_FilterInit(&CAN_FilterInitStructure);
 
 	/* Enable FIFO 0 message pending Interrupt */
-	CAN_ITConfig(CANx, CAN_IT_FMP0, ENABLE);
+	CAN_ITConfig(CAN2, CAN_IT_FMP0, ENABLE);
 
 }
 
-void CAN_GPIO_Initialise(CAN_TypeDef * CANx)
+void GPIO_Initialise()
 {
-	if(CANx == CAN1)
-	{
-		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_11 | GPIO_Pin_12,GPIO_PuPd_UP,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_CAN1);
-		GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_CAN1);
-	}
-	else if(CANx == CAN2)
-	{
-		GPIO_Initialise(GPIOB,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_5 | GPIO_Pin_6,GPIO_PuPd_UP,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_CAN2); //RX
-		GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_CAN2); //TX
-	}
-}
+	GPIO_InitTypeDef GPIO_InitStruct;
+	
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+	RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOA,DISABLE);
 
-/**
- *
- *
- */
-void CAN_RCC_Initialise(CAN_TypeDef * CANx)
-{
-    if (CANx == CAN1)
-    {
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1,ENABLE);
-    }
-    else if (CANx == CAN2)
-    {
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1,ENABLE);
-        RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN2,ENABLE);
-    }
-    else
-    {
-      while(1);
-    }
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA,&GPIO_InitStruct);
+    
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_CAN2); //Tx
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_CAN2); //Rx
 }
 
 // CAN Transmit
@@ -117,7 +95,7 @@ CAN RX Interrupt
 
 CanRxMsg msgRx;
 
-void CAN2_RX0_IRQHandler (void){
+void CAN2_RX0_IRQHandler(void){
 	__disable_irq();
 	if(CAN2->RF0R & CAN_RF0R_FMP0)
 	{
