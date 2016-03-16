@@ -13,5 +13,5 @@ void TEN_DOF_IUM_Initialise(I2C_TypeDef* I2Cx)
 	I2C_Initialise(I2Cx,I2C_Ack_Enable,I2C_AcknowledgedAddress_7bit, 100000, I2C_DutyCycle_2, I2C_Mode_I2C, 0x00);
 
 	//Accelerometer
-	L3GD20H_Initialise(I2Cx);
+	L3GD20H_Initialise();
 }

@@ -1,3 +1,5 @@
+#include "ION_I2C.h"
+
 #define BMP180_ADDRESS			(uint8_t)0x77
 
 typedef enum

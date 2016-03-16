@@ -1,5 +1,5 @@
-#include "LSM303.h"
-#include "I2C.h"
+#include "ION_LSM303.h"
+#include "ION_I2C.h"
 
 /**
  * @brief Initialise for the LSM303 Accelerometer.

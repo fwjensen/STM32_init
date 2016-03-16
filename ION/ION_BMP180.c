@@ -1,5 +1,5 @@
-#include "I2C.h"
-#include "BMP180.h"
+#include "ION_I2C.h"
+#include "ION_BMP180.h"
 
 //short
 int16_t AC1 = 0, AC2 = 0, AC3 = 0, B1 = 0, B2 = 0, MB = 0, MC = 0, MD = 0;

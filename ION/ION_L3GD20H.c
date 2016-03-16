@@ -3,6 +3,7 @@
 
 /*************-DEFINES-***************************/
 #define I2Cx I2C1
+
 /**
  * @brief Initialise for the L3GD20H.
  *
@@ -58,7 +59,7 @@ void L3GD20H_Initialise()
  * @param I2Cx			x = 1, 2, 3.
  *
  */
-uint16_t L3GD20H_X(I2C_TypeDef* I2Cx)
+uint16_t L3GD20H_X()
 {
 	return I2C_Read16(I2Cx,L3GD20H_ADDRESS,L3GD20H_REGISTER_OUT_X_H,L3GD20H_REGISTER_OUT_X_L);
 }
@@ -69,7 +70,7 @@ uint16_t L3GD20H_X(I2C_TypeDef* I2Cx)
  * @param I2Cx			x = 1, 2, 3.
  *
  */
-uint16_t L3GD20H_Y(I2C_TypeDef* I2Cx)
+uint16_t L3GD20H_Y()
 {
 	return I2C_Read16(I2Cx,L3GD20H_ADDRESS,L3GD20H_REGISTER_OUT_Y_H,L3GD20H_REGISTER_OUT_Y_L);
 }
@@ -80,7 +81,7 @@ uint16_t L3GD20H_Y(I2C_TypeDef* I2Cx)
  * @param I2Cx			x = 1, 2, 3.
  *
  */
-uint16_t L3GD20H_Z(I2C_TypeDef* I2Cx)
+uint16_t L3GD20H_Z()
 {
 	return I2C_Read16(I2Cx,L3GD20H_ADDRESS,L3GD20H_REGISTER_OUT_Z_H,L3GD20H_REGISTER_OUT_Z_L);
 }
@@ -91,12 +92,12 @@ uint16_t L3GD20H_Z(I2C_TypeDef* I2Cx)
  * @param I2Cx			x = 1, 2, 3.
  *
  */
-uint16_t L3GD20H_XYZ(I2C_TypeDef* I2Cx)
+uint16_t L3GD20H_XYZ()
 {
 	uint16_t axis[3];
-	axis[0] = L3GD20H_X(I2Cx);
-	axis[1] = L3GD20H_Y(I2Cx);
-	axis[2] = L3GD20H_Z(I2Cx);
+	axis[0] = L3GD20H_X();
+	axis[1] = L3GD20H_Y();
+	axis[2] = L3GD20H_Z();
 	//FIX THIS LATER!
 	return axis[1];
 }

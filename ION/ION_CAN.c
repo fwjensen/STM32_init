@@ -1,12 +1,8 @@
-#include "CAN.h"
-#include "GPIO.h"
+#include "ION_CAN.h"
+#include "ION_GPIO.h"
 #include "stm32f4xx_can.h"
 #include "stm32f4xx_gpio.h"
 
-/**
- * 
- * 
- */
 void CAN_Initialise(CAN_TypeDef * CANx)
 {
 	CAN_InitTypeDef CAN_InitStruct;
