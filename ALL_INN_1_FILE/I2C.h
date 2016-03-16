@@ -1,6 +1,7 @@
-#include "stm32f4xx_i2c.h"
+#include "stm32f4xx.h"
 
-void I2C_Initialise();
+void I2C_Initialise(void);
+void GPIO_Initialise(void);
 
 void I2C_Write8
 (
@@ -21,9 +22,3 @@ uint16_t I2C_Read16
 	uint8_t reg_MSB,
 	uint8_t reg_LSB
 );
-
-void RCC_I2C_Initialise();
-void RCC_I2C_DeInitialise();
-void I2C_GPIO_Initialise();
-void I2C_RCC_DeInitialise();
-void I2C_RCC_Initialise();

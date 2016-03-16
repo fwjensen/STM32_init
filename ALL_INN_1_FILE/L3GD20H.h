@@ -1,4 +1,4 @@
-#include "I2C.h"
+#include "stm32f4xx.h"
 
 #define L3GD20H_ADDRESS					(uint8_t)0x6B
 #define L3GD20H_AXIS_AND_POWER_ON		(uint8_t)0x0F
@@ -33,4 +33,13 @@ typedef enum
 	L3GD20H_REGISTER_INT1_DURATION       = 0x38
 } l3gd20hRegisters_t;
 
-void L3GD20H_Initialise(I2C_TypeDef* I2Cx);
+void L3GD20H_Initialise(void);
+void GPIO_Initialise(void);
+void I2C_Initialise(void);
+void I2C_Write8(uint8_t addr, uint8_t reg, uint8_t data);
+uint8_t I2C_Read8(uint8_t addr, uint8_t reg);
+uint16_t I2C_Read16(uint8_t addr, uint8_t reg_MSB, uint8_t reg_LSB);
+uint16_t L3GD20H_X(void);
+uint16_t L3GD20H_Y(void);
+uint16_t L3GD20H_Z(void);
+uint16_t L3GD20H_XYZ(void);

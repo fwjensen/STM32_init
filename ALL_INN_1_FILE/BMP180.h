@@ -1,4 +1,6 @@
-#define BMP180_ADDRESS			(uint8_t)0x77
+#include "stm32f4xx.h"
+
+#define BMP180_ADDRESS	(uint8_t)0x77
 
 typedef enum
 {
@@ -42,7 +44,26 @@ typedef enum
 	BMP180_OSS_8TIMES			= 0x03
 }bmp180Oss_t;
 
-void BMP180_Initialise(I2C_TypeDef* I2Cx);
-void BMP180_CalibrationData(I2C_TypeDef* I2Cx);
-int32_t BMP180_Temperature(I2C_TypeDef* I2Cx,bmp180Oss_t oss);
-int32_t BMP180_Pressure(I2C_TypeDef* I2Cx,bmp180Oss_t oss);
+void BMP180_Initialise(void);
+void GPIO_Initialise(void);
+void I2C_Initialise(void);
+void I2C_Write8
+(
+    uint8_t addr, 
+    uint8_t reg, 
+    uint8_t data
+);
+uint8_t I2C_Read8
+(
+    uint8_t addr, 
+    uint8_t reg
+);
+uint16_t I2C_Read16
+(
+    uint8_t addr, 
+    uint8_t reg_MSB, 
+    uint8_t reg_LSB
+);
+void BMP180_CalibrationData(void);
+int32_t BMP180_Temperature(bmp180Oss_t oss);
+int32_t BMP180_Pressure(bmp180Oss_t oss);
