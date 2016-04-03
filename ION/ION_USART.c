@@ -5,7 +5,7 @@
 #include "ION_USART.h"
 #include "misc.h"
 
-volatile char num[1024];
+uint16_t USARTData[1024];
 volatile int p = 0;
 
 /**
@@ -191,7 +191,7 @@ void USART_Write(USART_TypeDef * USARTx, uint16_t Data)
 
 void USART_Read(USART_TypeDef * USARTx)
 {
-	num[p++] = USART_ReceiveData(USARTx);
+	USARTData[p++] = USART_ReceiveData(USARTx);
 	if(p == 1024){
 		p = 0;
 	}

@@ -44,7 +44,8 @@ typedef enum
 	BMP180_OSS_8TIMES			= 0x03
 }bmp180Oss_t;
 
+void _BMP180_Initialise(I2C_TypeDef* I2Cx);
 void BMP180_Initialise(I2C_TypeDef* I2Cx);
-void BMP180_CalibrationData(I2C_TypeDef* I2Cx);
-int32_t BMP180_Temperature(I2C_TypeDef* I2Cx,bmp180Oss_t oss);
-int32_t BMP180_Pressure(I2C_TypeDef* I2Cx,bmp180Oss_t oss);
+void BMP180_CalibrationData(void);
+int32_t BMP180_Temperature(bmp180Oss_t oss);
+int32_t BMP180_Pressure(bmp180Oss_t oss);

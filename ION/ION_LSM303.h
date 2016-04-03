@@ -1,3 +1,5 @@
+#include "stm32f4xx_i2c.h"
+
 #define LSM303_ADDRESS_ACCEL          (uint8_t)0x1E
 #define LSM303_ADDRESS_MAG            (uint8_t)0x19
 
@@ -76,3 +78,30 @@ typedef enum
 	LSM303_MAGRATE_75                         = 0x06,  // 75 Hz
 	LSM303_MAGRATE_220                        = 0x07   // 200 Hz
 } lsm303MagRate;
+
+typedef struct
+{
+    uint16_t X;
+    uint16_t Y;
+    uint16_t Z;
+} lsm303AccelAxis;
+
+typedef struct
+{
+    uint16_t X;
+    uint16_t Y;
+    uint16_t Z;
+} lsm303MagAxis;
+
+void _LSM303_ACCEL_Initialise(I2C_TypeDef* I2Cx);
+void LSM303_ACCEL_Initialise(I2C_TypeDef* I2Cx);
+void _LSM303_MAG_Initialise(I2C_TypeDef* I2Cx);
+void LSM303_MAG_Initialise(I2C_TypeDef* I2Cx);
+uint16_t LSM303_ACCEL_X(void);
+uint16_t LSM303_ACCEL_Y(void);
+uint16_t LSM303_ACCEL_Z(void);
+lsm303AccelAxis LSM303_ACCEL_XYZ(void);
+uint16_t LSM303_MAG_X(void);
+uint16_t LSM303_MAG_Y(void);
+uint16_t LSM303_MAG_Z(void);
+lsm303MagAxis LSM303_MAG_XYZ(void);

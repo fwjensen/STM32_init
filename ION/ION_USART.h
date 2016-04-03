@@ -1,4 +1,7 @@
 #include "stm32f4xx_usart.h"
+
+extern uint16_t USARTData[1024];
+
 void USART_Initialize
 (
 	USART_TypeDef * USARTx,
@@ -24,6 +27,13 @@ void USART_NVIC_Initialise
 (
 	USART_TypeDef * USARTx
 );
+
+void USART_Write
+(
+    USART_TypeDef * USARTx,
+    uint16_t Data
+);
+
 void USART_Read
 (
 		USART_TypeDef * USARTx

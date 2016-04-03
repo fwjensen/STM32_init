@@ -13,7 +13,6 @@ void USART2_IRQHandler(void){
 	{
 		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
 		USART_Read(USART2);
-
 	}
 }
 void USART3_IRQHandler(void){

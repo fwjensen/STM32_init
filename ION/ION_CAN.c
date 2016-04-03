@@ -1,6 +1,5 @@
 #include "ION_CAN.h"
 #include "ION_GPIO.h"
-#include "stm32f4xx_can.h"
 #include "stm32f4xx_gpio.h"
 
 void CAN_Initialise(CAN_TypeDef * CANx)
@@ -29,9 +28,9 @@ void CAN_Initialise(CAN_TypeDef * CANx)
     
     
 	/* CAN Baudrate = 500 KBps (CAN clocked at 42 MHz) */
-	CAN_InitStruct.CAN_BS1 = CAN_BS1_10tq; //CAN_BS1_4tq;
-	CAN_InitStruct.CAN_BS2 = CAN_BS1_1tq; //CAN_BS2_2tq;
-	CAN_InitStruct.CAN_Prescaler = 5;//(42000000 / 7) / 500000; -> 12
+	CAN_InitStruct.CAN_BS1 = CAN_BS1_4tq;
+	CAN_InitStruct.CAN_BS2 = CAN_BS2_2tq;
+	CAN_InitStruct.CAN_Prescaler = (42000000 / 7) / 500000; // -> 12
 	CAN_Init(CANx, &CAN_InitStruct);
 
 	/* CAN filter init */
@@ -56,8 +55,8 @@ void CAN_GPIO_Initialise(CAN_TypeDef * CANx)
 	if(CANx == CAN1)
 	{
 		GPIO_Initialise(GPIOA,GPIO_Mode_AF,GPIO_OType_PP,GPIO_Pin_11 | GPIO_Pin_12,GPIO_PuPd_UP,GPIO_Speed_50MHz);
-		GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_CAN1);
-		GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_CAN1);
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_CAN1); //RX
+		GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_CAN1); //TX
 	}
 	else if(CANx == CAN2)
 	{
@@ -91,7 +90,7 @@ void CAN_RCC_Initialise(CAN_TypeDef * CANx)
 // CAN Transmit
 uint8_t i = 0;
 
-uint8_t CAN_Write(uint32_t address, uint8_t length, uint8_t data[8])
+uint8_t CAN_Write(CAN_TypeDef * CANx, uint32_t address, uint8_t length, uint8_t data[8])
 {
     CanTxMsg msg;
 	msg.StdId 	= address;
@@ -103,7 +102,7 @@ uint8_t CAN_Write(uint32_t address, uint8_t length, uint8_t data[8])
     {
 		msg.Data[i] = data[i];
 	}
-	return CAN_Transmit(CAN2, &msg);
+	return CAN_Transmit(CANx, &msg);
 }
 
 
@@ -118,6 +117,7 @@ void CAN2_RX0_IRQHandler (void){
 	if(CAN2->RF0R & CAN_RF0R_FMP0)
 	{
 		CAN_Receive(CAN2, CAN_FIFO0, &msgRx);
+        //Add msgRx to a buffer and prosess it another place.
 	}
 	__enable_irq();
 }

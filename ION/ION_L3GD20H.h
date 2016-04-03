@@ -33,8 +33,16 @@ typedef enum
 	L3GD20H_REGISTER_INT1_DURATION       = 0x38
 } l3gd20hRegisters_t;
 
-void L3GD20H_Initialise(void);
+typedef struct
+{
+    uint16_t X;
+    uint16_t Y;
+    uint16_t Z;
+} l3gd20hAxis;
+
+void _L3GD20H_Initialise(I2C_TypeDef* I2Cx);
+void L3GD20H_Initialise(I2C_TypeDef * I2CX);
 uint16_t L3GD20H_X(void);
 uint16_t L3GD20H_Y(void);
 uint16_t L3GD20H_Z(void);
-uint16_t L3GD20H_XYZ(void);
+l3gd20hAxis L3GD20H_XYZ(void);
